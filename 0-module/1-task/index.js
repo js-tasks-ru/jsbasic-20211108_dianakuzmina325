@@ -1,4 +1,6 @@
 function sum(m, n) {
+  let m;
+  let n;
   return m + n;
 }
 
