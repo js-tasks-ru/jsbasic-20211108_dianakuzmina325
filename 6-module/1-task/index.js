@@ -16,17 +16,14 @@ export default class UserTable {
 
   constructor(rows) {
 
-  }
+    this.rows = rows;
 
-  createTable() {
     let table = document.createElement('table');
     let thead = document.createElement('thead');
     let tbody = document.createElement('tbody');
 
     table.appendChild(thead);
     table.appendChild(tbody);
-
-    document.body.appendChild(table);
 
     let head = document.createElement('tr');
     let thName = document.createElement('th');
@@ -41,31 +38,31 @@ export default class UserTable {
     let thCity = document.createElement('th');
     thCity.innerHTML = "City";
 
-    head.appendChild(heading_1);
-    head.appendChild(heading_2);
-    head.appendChild(heading_3);
-    head.appendChild(heading_4);
+    head.appendChild(thName);
+    head.appendChild(thAge);
+    head.appendChild(thSalary);
+    head.appendChild(thCity);
     thead.appendChild(head);
 
-    for (let i = 0; i < rows.length; i++) {
+    for (let i = 0; i < this.rows.length; i++) {
 
       let tr = document.createElement('tr');
       tbody.appendChild(tr);
 
       let name = document.createElement('td');
-      name.innerHTML = rows[i].name;
+      name.innerHTML = this.rows[i].name;
       tr.appendChild(name);
 
       let age = document.createElement('td');
-      age.innerHTML = rows[i].age;
+      age.innerHTML = this.rows[i].age;
       tr.appendChild(age);
 
       let salary = document.createElement('td');
-      salary.innerHTML = rows[i].salary;
+      salary.innerHTML = this.rows[i].salary;
       tr.appendChild(salary);
 
       let city = document.createElement('td');
-      city.innerHTML = rows[i].city;
+      city.innerHTML = this.rows[i].city;
       tr.appendChild(city);
 
       let buttonRemove = document.createElement('td');
@@ -73,13 +70,16 @@ export default class UserTable {
       tr.appendChild(buttonRemove);
 
     }
+
+    this.elem = table;
+    this.deleteRow();
+
   }
 
-  deleterow() {
-    let trAll = tbody.querySelectorAll('tr');
+  deleteRow() {
+    let trAll = this.elem.querySelectorAll('tr');
     for (let tr of trAll) {
       tr.lastElementChild.onclick = () => tr.remove();
     }
   }
-
 }
