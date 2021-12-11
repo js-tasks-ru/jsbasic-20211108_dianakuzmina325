@@ -49,6 +49,7 @@ export default class Carousel {
     }
 
     this.switchSlides();
+    this.addProductInCarousel();
 
   }
 
@@ -57,11 +58,9 @@ export default class Carousel {
     let carouselArrowLeft = this.elem.querySelector('.carousel__arrow_left');
 
     let carouselInner = this.elem.querySelector('.carousel__inner');
-    console.log(carouselInner);
-    let offsetWidth = this.elem.querySelector('.carousel__inner').offsetWidth;
-    console.log(offsetWidth);
     let carouselSlide = this.elem.querySelectorAll('.carousel__slide');
 
+    let offsetWidth;
     let position = 0;
     carouselArrowLeft.style.display = 'none';
 
@@ -75,6 +74,7 @@ export default class Carousel {
     });
 
     carouselArrowRight.addEventListener('click', () => {
+      offsetWidth = this.elem.querySelector('.carousel__inner').offsetWidth;
       position -= offsetWidth;
       carouselArrowLeft.style.display = '';
       if (position == -offsetWidth * (carouselSlide.length - 1)) {
@@ -85,19 +85,19 @@ export default class Carousel {
   }
 
   addProductInCarousel() {
-    let addProduct = new CustomEvent('product-add', {
-      detail: this.id,
-      bubbles: true
-    });
 
     let btnAll = this.elem.querySelectorAll('.carousel__button');
 
     for (let btn of btnAll) {
-      btn.addEventListener('click', () => {
-        this.elem.dispatchEvent(addProduct);
+      btn.addEventListener('click', (event) => {
+        this.currentId = event.target.closest('[data-id]').getAttribute('data-id');
+        this.elem.dispatchEvent(new CustomEvent('product-add', {
+          detail: this.currentId,
+          bubbles: true
+        }));
       })
     }
 
   }
-  
+
 }
