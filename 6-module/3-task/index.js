@@ -22,14 +22,19 @@ export default class Carousel {
   `);
 
     this.elem = carousel;
-    this.addProductInCarousel();
+    this.#createSlides();
+    this.#switchSlides();
+    this.#addProductInCarousel();
 
+  }
+
+  #createSlides() {
     for (let i = 0; i < this.slides.length; i++) {
 
-      this.id = slides[i].id;
-      this.name = slides[i].name;
-      this.price = slides[i].price.toFixed(2);
-      this.img = slides[i].image;
+      this.id = this.slides[i].id;
+      this.name = this.slides[i].name;
+      this.price = this.slides[i].price.toFixed(2);
+      this.img = this.slides[i].image;
 
       let slide = createElement(`
         <div class="carousel__slide" data-id="${this.id}">
@@ -44,16 +49,12 @@ export default class Carousel {
         </div>
       `);
 
-      carousel.querySelector('.carousel__inner').appendChild(slide);
+      this.elem.querySelector('.carousel__inner').appendChild(slide);
 
     }
-
-    this.switchSlides();
-    this.addProductInCarousel();
-
   }
 
-  switchSlides() {
+  #switchSlides() {
     let carouselArrowRight = this.elem.querySelector('.carousel__arrow_right');
     let carouselArrowLeft = this.elem.querySelector('.carousel__arrow_left');
 
@@ -84,7 +85,7 @@ export default class Carousel {
     });
   }
 
-  addProductInCarousel() {
+  #addProductInCarousel() {
 
     let btnAll = this.elem.querySelectorAll('.carousel__button');
 

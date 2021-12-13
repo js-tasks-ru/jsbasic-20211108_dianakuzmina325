@@ -19,30 +19,35 @@ export default class UserTable {
     this.rows = rows;
 
     let table = document.createElement('table');
-    let thead = document.createElement('thead');
-    let tbody = document.createElement('tbody');
+    table.innerHTML = this.#getTemplateMain();
+    
+    this.elem = table;
 
-    table.appendChild(thead);
-    table.appendChild(tbody);
+    this.#getTemplateRows();
+    this.deleteRow();
+  }
 
-    let head = document.createElement('tr');
-    let thName = document.createElement('th');
-    thName.innerHTML = "Name";
+  #getTemplateMain() {
+    return `
+      <table>
+        <thead>
+          <tr>
+            <th>Имя</th>
+            <th>Возраст</th>
+            <th>Зарплата</th>
+            <th>Город</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="result">
+        </tbody>
+      </table>
+    `
+  }
 
-    let thAge = document.createElement('th');
-    thAge.innerHTML = "Age";
+  #getTemplateRows() {
 
-    let thSalary = document.createElement('th');
-    thSalary.innerHTML = "Salary";
-
-    let thCity = document.createElement('th');
-    thCity.innerHTML = "City";
-
-    head.appendChild(thName);
-    head.appendChild(thAge);
-    head.appendChild(thSalary);
-    head.appendChild(thCity);
-    thead.appendChild(head);
+    let tbody = this.elem.querySelector('.result');
 
     for (let i = 0; i < this.rows.length; i++) {
 
@@ -70,10 +75,6 @@ export default class UserTable {
       tr.appendChild(buttonRemove);
 
     }
-
-    this.elem = table;
-    this.deleteRow();
-
   }
 
   deleteRow() {
@@ -82,4 +83,5 @@ export default class UserTable {
       tr.lastElementChild.onclick = () => tr.remove();
     }
   }
+
 }
